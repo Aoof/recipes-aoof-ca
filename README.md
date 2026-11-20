@@ -1,51 +1,46 @@
-# Aoof.ca
+# Fae's Grimoire (recipes, formerly aoof.ca)
 
-## Description
+The 2024–25 version of aoof.ca. On the surface it was my portfolio; behind a login it held **Fae's Grimoire**, a shared recipe book for me and my friends. A SvelteKit front end is served by an Express and MongoDB back end on one Node server.
 
-Aoof.ca is a web application that seems like a regular portfolio website, but has a hidden feature that is useful for me and my friends. The website is a Svelte frontend with an Express.js backend.
+My current portfolio lives in [svelte-aoof-ca](https://github.com/Aoof/svelte-aoof-ca).
 
-## Getting Started
+## Features
+- Sign up, log in and log out, with bcrypt-hashed passwords, JWTs and sessions stored in MongoDB
+- Create, view, edit and delete recipes: title, ingredients with amounts, instructions, cook time, food type, tags and a vegetarian flag
+- Search and tag filtering, with paginated recipe cards
+- Toast notifications and custom Svelte components
+- A backup script that exports the recipes collection to dated JSON files and removes old logs
+- In production, Express serves HTTPS with its own certificate and answers ACME challenges for renewal
 
-### Dependencies
+## Tech
+SvelteKit 2, Svelte 4, TypeScript, Tailwind CSS, SCSS · Node.js, Express, MongoDB, express-session, connect-mongo, JWT, bcrypt
 
-* Will be available in the frontend and backend READMEs
+## Project structure
+```
+frontend/   SvelteKit app (routes: home, add-recipe, recipe/[id], recipe/[id]/edit)
+backend/    Express API (/api/auth, /api/recipes), MongoDB models, auth middleware, backup.js
+buildrun.sh builds the front end, then starts the back end
+```
 
-### Installing
+## Run it locally
+Requires Node.js 18+ and a MongoDB database (local or Atlas).
 
-* Review the frontend and backend READMEs for installation instructions
-
-### Executing program
-
-* How to run the program
-    - Frontend
-        - `cd frontend`
-        - `npm run dev`
-    - Backend
-        - `cd backend`
-        - `npm run dev`
-
-## Frontend
-
-The frontend of this project is located in the [frontend](frontend) directory. It is a Svelte project. For more details, refer to the [frontend README](frontend/README.md).
-
-## Backend
-
-The backend of this project is located in the [backend](backend) directory. It is a Node.js and Express.js project. For more details, refer to the backend README (if available).
+1. Create `backend/.env`:
+   ```
+   MONGO_URI=mongodb://localhost:27017
+   DBNAME=recipes
+   SESSION_SECRET=change-me
+   JWT_SECRET=change-me
+   PORT=3000
+   ```
+2. Install and start both parts:
+   ```bash
+   git clone https://github.com/Aoof/recipes-aoof-ca.git
+   cd recipes-aoof-ca
+   (cd backend && npm install && npm run dev)
+   (cd frontend && npm install && npm run dev)
+   ```
+3. For a production-style run, use `./buildrun.sh`.
 
 ## Author
-
-Abdulrahman Mousa [(aoof.ca)](https://aoof.ca)
-
-## Version History
-
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the LICENSE.md file for details
-
-## Acknowledgments
-
-1. [Loading Spinners [Svelte.dev]](https://svelte.dev/repl/14a03ba29cbc408f8d26904c2f59a985?version=3.46.4)
-
+Abdulrahman (Aoof) Mousa · [aoof.ca](https://aoof.ca)
